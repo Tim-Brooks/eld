@@ -1,26 +1,13 @@
-(ns trees.tree)
+(ns trees.tree
+  (:require [trees.node :as node]))
 
 (set! *warn-on-reflection* true)
 
-(defprotocol Node
-  (leaf? [this]))
-
-(defprotocol LeafNode
-  (value [this]))
-
-(defprotocol BranchNode
-  (children [this])
-  (condition [this]))
-
-(extend-protocol Node
-  (Class/forName "[Ljava.lang.Object;")
-  (leaf? [this] (aget ^objects this 0)))
-
-(extend-protocol LeafNode
+(extend-protocol node/LeafNode
   (Class/forName "[Ljava.lang.Object;")
   (value [this] (aget ^objects this 1)))
 
-(extend-protocol BranchNode
+(extend-protocol node/BranchNode
   (Class/forName "[Ljava.lang.Object;")
   (children [this] (aget ^objects this 2))
   (condition [this] (aget ^objects this 1)))

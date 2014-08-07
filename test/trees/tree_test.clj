@@ -1,6 +1,7 @@
 (ns trees.tree-test
   (:use [clojure.test])
-  (:require [trees.tree :as tree]))
+  (:require [trees.node :as node]
+            [trees.tree :as tree]))
 
 (def ^:private tree-nodes
   [{:condition (fn [feature-map] (> 1.0 (get feature-map "feature" 0)) 1 2)
@@ -15,13 +16,13 @@
     :id "3"}])
 
 (defn- leaf-tests [expected actual]
-  (is (= true (tree/leaf? actual)))
-  (is (= (:value expected) (tree/value actual))))
+  (is (= true (node/leaf? actual)))
+  (is (= (:value expected) (node/value actual))))
 
 (defn- branch-tests [expected actual]
-  (is (= false (tree/leaf? actual)))
-  (is (= (:condition expected) (tree/condition actual)))
-  (is (= (:children expected) (vec (tree/children actual)))))
+  (is (= false (node/leaf? actual)))
+  (is (= (:condition expected) (node/condition actual)))
+  (is (= (:children expected) (vec (node/children actual)))))
 
 (deftest tree-construction
   (let [tree (tree/tree tree-nodes)]
