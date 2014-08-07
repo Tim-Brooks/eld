@@ -3,6 +3,10 @@
 
 (set! *warn-on-reflection* true)
 
+(extend-protocol node/Node
+  (Class/forName "[Ljava.lang.Object;")
+  (leaf? [this] (aget ^objects this 0)))
+
 (extend-protocol node/LeafNode
   (Class/forName "[Ljava.lang.Object;")
   (value [this] (aget ^objects this 1)))
