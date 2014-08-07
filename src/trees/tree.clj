@@ -16,4 +16,4 @@
      :condition-func (fn [^objects node] (aget node 1))
      :value-func (fn [^objects node] (aget node 1))
      :leaf-func (fn [^objects node] (aget node 0))
-     :children-func (fn [^objects node] (aget node 0))}))
+     :children-func (fn [^objects node] (aget node 2))}))
