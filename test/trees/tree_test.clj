@@ -14,19 +14,19 @@
     :leaf? true
     :id "3"}])
 
-(defn- leaf-tests [{:keys [leaf-func value-func]} expected actual]
-  (is (= true (leaf-func actual)))
-  (is (= (:value expected) (value-func actual))))
+(defn- leaf-tests [expected actual]
+  (is (= true (tree/leaf? actual)))
+  (is (= (:value expected) (tree/value actual))))
 
-(defn- branch-tests [{:keys [leaf-func condition-func children-func]} expected actual]
-  (is (= false (leaf-func actual)))
-  (is (= (:condition expected) (condition-func actual)))
-  (is (= (:children expected) (vec (children-func actual)))))
+(defn- branch-tests [expected actual]
+  (is (= false (tree/leaf? actual)))
+  (is (= (:condition expected) (tree/condition actual)))
+  (is (= (:children expected) (vec (tree/children actual)))))
 
 (deftest tree-construction
   (let [tree (tree/tree tree-nodes)]
     (doseq [[expected actual] (map vector tree-nodes (:nodes tree))]
       (testing (str "Comparing node " (:id expected) " with actual.")
         (if (:leaf? expected)
-          (leaf-tests tree expected actual)
-          (branch-tests tree expected actual))))))
+          (leaf-tests expected actual)
+          (branch-tests expected actual))))))
