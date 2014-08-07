@@ -1,5 +1,5 @@
-(ns trees.tree
-  (:require [trees.node :as node]))
+(ns eld.tree
+  (:require [eld.node :as node]))
 
 (set! *warn-on-reflection* true)
 
@@ -27,3 +27,5 @@
   (let [nodes (mapv create-node node-maps)]
     {:nodes (to-array nodes)
      :size (count nodes)}))
+
+(defn score-tree [])

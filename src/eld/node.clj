@@ -1,4 +1,4 @@
-(ns trees.node)
+(ns eld.node)
 
 (defprotocol Node
   (leaf? [this]))

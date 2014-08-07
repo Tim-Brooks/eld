@@ -1,7 +1,7 @@
-(ns trees.tree-test
+(ns eld.tree-test
   (:use [clojure.test])
-  (:require [trees.node :as node]
-            [trees.tree :as tree]))
+  (:require [eld.node :as node]
+            [eld.tree :as tree]))
 
 (def ^:private tree-nodes
   [{:condition (fn [feature-map] (> 1.0 (get feature-map "feature" 0)) 1 2)
