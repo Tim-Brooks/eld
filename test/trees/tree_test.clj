@@ -5,24 +5,28 @@
 (def ^:private tree-nodes
   [{:condition (fn [feature-map] (> 1.0 (get feature-map "feature" 0)) 1 2)
     :leaf? false
-    :children [1 2]}
+    :children [1 2]
+    :id "1"}
    {:value 2
-    :leaf? true}
+    :leaf? true
+    :id "2"}
    {:value 3
-    :leaf? true}])
+    :leaf? true
+    :id "3"}])
+
+(defn- leaf-tests [{:keys [leaf-func value-func]} expected actual]
+  (is (= true (leaf-func actual)))
+  (is (= (:value expected) (value-func actual))))
+
+(defn- branch-tests [{:keys [leaf-func condition-func children-func]} expected actual]
+  (is (= false (leaf-func actual)))
+  (is (= (:condition expected) (condition-func actual)))
+  (is (= (:children expected) (vec (children-func actual)))))
 
 (deftest tree-construction
-  (testing "Testing construction of simple tree"
-    (let [{:keys [nodes
-                  condition-func
-                  value-func
-                  leaf-func
-                  children-func]} (tree/tree tree-nodes)
-          [node1 node2 node3] (vec nodes)]
-      (is (= false (leaf-func node1)))
-      (is (= (:condition (nth tree-nodes 0)) (condition-func node1)))
-      (is (= (:children (nth tree-nodes 0)) (vec (children-func node1))))
-      (is (= true (leaf-func node2)))
-      (is (= (:value (nth tree-nodes 1)) (value-func node2)))
-      (is (= true (leaf-func node3)))
-      (is (= (:value (nth tree-nodes 2)) (value-func node3))))))
+  (let [tree (tree/tree tree-nodes)]
+    (doseq [[expected actual] (map vector tree-nodes (:nodes tree))]
+      (testing (str "Comparing node " (:id expected) " with actual.")
+        (if (:leaf? expected)
+          (leaf-tests tree expected actual)
+          (branch-tests tree expected actual))))))
