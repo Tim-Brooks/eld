@@ -47,3 +47,13 @@
       (is (= 5 (tree/score-tree tree {"feature" 2 "feature2" 0})))
       (is (= 4 (tree/score-tree tree {"feature" 2})))
       (is (= 2 (tree/score-tree tree {}))))))
+
+(deftest score-tree-with-path
+  (let [tree (tree/tree tree-nodes)]
+    (testing "Score tree with path returns expected value and path"
+      (is (= {:value 2, :path [0 1]}
+             (tree/score-tree-with-path tree {"feature" 0 "feature2" 0})))
+      (is (= {:value 4, :path [0 2 3]}
+             (tree/score-tree-with-path tree {"feature" 2 "feature2" 3})))
+      (is (= {:value 5, :path [0 2 4]}
+             (tree/score-tree-with-path tree {"feature" 2 "feature2" 0.5}))))))
