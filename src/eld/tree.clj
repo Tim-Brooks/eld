@@ -10,6 +10,15 @@
      :size (count nodes)
      :root 0}))
 
+(defn score-tree-with-path [{:keys [nodes root]} features]
+  (loop [node-index root
+         path (transient [])]
+    (let [modified-path (conj! path node-index)
+          node (nth nodes node-index)]
+      (if (node/leaf? node)
+        {:value (node/value node) :path (persistent! path)}
+        (recur ((node/condition node) features) modified-path)))))
+
 (defn score-tree [{:keys [nodes root]} features]
   (loop [node (nth nodes root)]
     (if (node/leaf? node)
