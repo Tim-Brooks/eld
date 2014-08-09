@@ -34,7 +34,7 @@
 
 (deftest score-tree
   (let [tree (tree/tree tree-nodes)]
-    (testing "Scored tree returns expected values"
+    (testing "Score tree returns expected value"
       (is (= 2 (tree/score-tree tree {"feature" 0})))
       (is (= 3 (tree/score-tree tree {"feature" 2})))
       (is (= 2 (tree/score-tree tree {}))))))
