@@ -23,4 +23,4 @@
   (loop [node (nth nodes root)]
     (if (node/leaf? node)
       (node/value node)
-      (recur (nth nodes ((node/condition node) features))))))
+      (recur (nth nodes (nth (node/children node) ((node/condition node) features)))))))
