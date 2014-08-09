@@ -26,6 +26,11 @@
 (defn tree [node-maps]
   (let [nodes (mapv create-node node-maps)]
     {:nodes (to-array nodes)
-     :size (count nodes)}))
+     :size (count nodes)
+     :root 0}))
 
-(defn score-tree [])
+(defn score-tree [{:keys [nodes root]} features]
+  (loop [node (nth nodes root)]
+    (if (node/leaf? node)
+      (node/value node)
+      (recur (nth nodes ((node/condition node) features))))))

@@ -4,7 +4,7 @@
             [eld.tree :as tree]))
 
 (def ^:private tree-nodes
-  [{:condition (fn [feature-map] (> 1.0 (get feature-map "feature" 0)) 1 2)
+  [{:condition (fn [feature-map] (if (> 1.0 (get feature-map "feature" 0)) 1 2))
     :leaf? false
     :children [1 2]
     :id "1"}
