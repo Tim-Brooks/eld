@@ -11,7 +11,7 @@
    {:value 2
     :leaf? true
     :id "2"}
-   {:condition (fn [feature-map] (if (< 1.0 (get feature-map "feature2" 0)) 0 1))
+   {:condition (fn [feature-map] (if (< 1.0 (get feature-map "feature2" 2)) 0 1))
     :leaf? false
     :children [3 4]
     :id "3"}
@@ -45,4 +45,5 @@
       (is (= 2 (tree/score-tree tree {"feature" 0 "feature2" 0})))
       (is (= 4 (tree/score-tree tree {"feature" 2 "feature2" 2})))
       (is (= 5 (tree/score-tree tree {"feature" 2 "feature2" 0})))
+      (is (= 4 (tree/score-tree tree {"feature" 2})))
       (is (= 2 (tree/score-tree tree {}))))))
