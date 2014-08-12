@@ -6,8 +6,8 @@ A Clojure library to create fast, reducible, debuggable trees.
 
 Tree schema:
 
-Leaf Node:   {:leaf? true :value value}
-Branch Node: {:leaf? false :condition (fn [features] ...) :children []}
+* Leaf Node:   {:leaf? true :value value}
+* Branch Node: {:leaf? false :condition (fn [features] ...) :children []}
 
 ## License
 
