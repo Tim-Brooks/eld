@@ -16,8 +16,10 @@
   (children [this] (aget ^objects this 2))
   (condition [this] (aget ^objects this 1)))
 
-
-(defn create-node [{:keys [condition branch? children value]}]
+(defn create-node [condition branch? children value]
   (if branch?
     (to-array [true condition (to-array children)])
     (to-array [false value])))
+
+(defn create-node-from-map [{:keys [condition branch? children value]}]
+  (create-node condition branch? children value))
