@@ -5,29 +5,29 @@
 
 (def ^:private tree-nodes
   [{:condition (fn [feature-map] (if (> 1.0 (get feature-map "feature" 0)) 0 1))
-    :leaf? false
+    :branch? true
     :children [1 2]
     :id "1"}
    {:value 2
-    :leaf? true
+    :branch? false
     :id "2"}
    {:condition (fn [feature-map] (if (< 1.0 (get feature-map "feature2" 2)) 0 1))
-    :leaf? false
+    :branch? true
     :children [3 4]
     :id "3"}
    {:value 4
-    :leaf? true
+    :branch? false
     :id "4"}
    {:value 5
-    :leaf? true
+    :branch? false
     :id "5"}])
 
 (defn- leaf-tests [expected actual]
-  (is (= true (node/leaf? actual)))
+  (is (= false (node/branch? actual)))
   (is (= (:value expected) (node/value actual))))
 
 (defn- branch-tests [expected actual]
-  (is (= false (node/leaf? actual)))
+  (is (= true (node/branch? actual)))
   (is (= (:condition expected) (node/condition actual)))
   (is (= (:children expected) (vec (node/children actual)))))
 
@@ -35,9 +35,9 @@
   (let [tree (tree/tree tree-nodes)]
     (doseq [[expected actual] (map vector tree-nodes (:nodes tree))]
       (testing (str "Comparing node " (:id expected) " with actual.")
-        (if (:leaf? expected)
-          (leaf-tests expected actual)
-          (branch-tests expected actual))))))
+        (if (:branch? expected)
+          (branch-tests expected actual)
+          (leaf-tests expected actual))))))
 
 (deftest score-tree
   (let [tree (tree/tree tree-nodes)]

@@ -1,7 +1,7 @@
 (ns eld.node)
 
 (defprotocol Node
-  (leaf? [this]))
+  (branch? [this]))
 
 (defprotocol LeafNode
   (value [this]))

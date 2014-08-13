@@ -5,7 +5,7 @@
 
 (extend-protocol node/Node
   (Class/forName "[Ljava.lang.Object;")
-  (leaf? [this] (aget ^objects this 0)))
+  (branch? [this] (aget ^objects this 0)))
 
 (extend-protocol node/LeafNode
   (Class/forName "[Ljava.lang.Object;")
@@ -17,7 +17,7 @@
   (condition [this] (aget ^objects this 1)))
 
 
-(defn create-node [{:keys [condition leaf? children value] :as node-map}]
-  (if leaf?
-    (to-array [true value])
-    (to-array [false condition (to-array children)])))
+(defn create-node [{:keys [condition branch? children value]}]
+  (if branch?
+    (to-array [true condition (to-array children)])
+    (to-array [false value])))
