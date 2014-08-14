@@ -26,10 +26,12 @@
 
 (defn- leaf-tests [expected actual]
   (is (= false (node/branch? actual)))
+  (is (= true (node/leaf? actual)))
   (is (= (:value expected) (node/value actual))))
 
 (defn- branch-tests [expected actual]
   (is (= true (node/branch? actual)))
+  (is (= false (node/leaf? actual)))
   (is (= (:feature expected) (node/feature actual)))
   (is (= (:condition expected) (node/condition actual)))
   (is (= (:children expected) (vec (node/children actual)))))
