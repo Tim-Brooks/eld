@@ -5,7 +5,8 @@
 
 (extend-protocol node/Node
   (Class/forName "clojure.lang.PersistentVector")
-  (branch? [this] (nth this 0)))
+  (branch? [this] (nth this 0))
+  (leaf? [this] (not (nth this 0))))
 
 (extend-protocol node/LeafNode
   (Class/forName "clojure.lang.PersistentVector")
