@@ -9,4 +9,5 @@
 
 (defprotocol BranchNode
   (children [this])
-  (condition [this]))
+  (condition [this])
+  (feature [this]))

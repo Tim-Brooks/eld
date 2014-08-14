@@ -14,13 +14,14 @@
 
 (extend-protocol node/BranchNode
   (Class/forName "clojure.lang.PersistentVector")
-  (children [this] (nth this 2))
+  (children [this] (nth this 3))
+  (condition [this] (nth this 2))
   (condition [this] (nth this 1)))
 
-(defn create-node [condition branch? children value]
+(defn create-node [condition feature branch? children value]
   (if branch?
-    [true condition (to-array children)]
+    [true feature condition (to-array children)]
     [false value]))
 
-(defn create-node-from-map [{:keys [condition branch? children value]}]
-  (create-node condition branch? children value))
+(defn create-node-from-map [{:keys [condition feature branch? children value]}]
+  (create-node condition feature branch? children value))

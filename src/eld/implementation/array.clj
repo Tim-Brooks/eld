@@ -14,13 +14,14 @@
 
 (extend-protocol node/BranchNode
   (Class/forName "[Ljava.lang.Object;")
-  (children [this] (aget ^objects this 2))
-  (condition [this] (aget ^objects this 1)))
+  (children [this] (aget ^objects this 3))
+  (condition [this] (aget ^objects this 2))
+  (feature [this] (aget ^objects this 1)))
 
-(defn create-node [condition branch? children value]
+(defn create-node [condition feature branch? children value]
   (if branch?
-    (to-array [true condition (to-array children)])
+    (to-array [true feature condition (to-array children)])
     (to-array [false value])))
 
-(defn create-node-from-map [{:keys [condition branch? children value]}]
-  (create-node condition branch? children value))
+(defn create-node-from-map [{:keys [condition feature branch? children value]}]
+  (create-node condition feature branch? children value))

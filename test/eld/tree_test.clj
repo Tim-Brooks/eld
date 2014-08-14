@@ -5,6 +5,7 @@
 
 (def ^:private tree-nodes
   [{:condition (fn [feature-map] (if (> 1.0 (get feature-map "feature" 0)) 0 1))
+    :feature "feature"
     :branch? true
     :children [1 2]
     :id "1"}
@@ -12,6 +13,7 @@
     :branch? false
     :id "2"}
    {:condition (fn [feature-map] (if (< 1.0 (get feature-map "feature2" 2)) 0 1))
+    :feature "feature2"
     :branch? true
     :children [3 4]
     :id "3"}
@@ -28,6 +30,7 @@
 
 (defn- branch-tests [expected actual]
   (is (= true (node/branch? actual)))
+  (is (= (:feature expected) (node/feature actual)))
   (is (= (:condition expected) (node/condition actual)))
   (is (= (:children expected) (vec (node/children actual)))))
 
