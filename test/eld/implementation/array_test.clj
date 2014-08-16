@@ -1,4 +1,4 @@
-(ns eld.tree-test
+(ns eld.implementation.array-test
   (:use [clojure.test])
   (:require [eld.node :as node]
             [eld.tree :as tree]))
