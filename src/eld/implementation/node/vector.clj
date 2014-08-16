@@ -1,4 +1,4 @@
-(ns eld.implementation.vector
+(ns eld.implementation.node.vector
   (:require [eld.node :as node]))
 
 (set! *warn-on-reflection* true)

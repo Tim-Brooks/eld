@@ -1,4 +1,4 @@
-(ns eld.implementation.array
+(ns eld.implementation.node.array
   (:require [eld.node :as node]))
 
 (set! *warn-on-reflection* true)

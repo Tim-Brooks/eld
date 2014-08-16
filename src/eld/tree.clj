@@ -1,7 +1,7 @@
 (ns eld.tree
   (:require [clojure.zip :as zip]
             [eld.node :as node]
-            [eld.implementation.array :as array]))
+            [eld.implementation.node.array :as array]))
 
 (set! *warn-on-reflection* true)
 
