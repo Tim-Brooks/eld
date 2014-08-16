@@ -1,15 +1,22 @@
 (ns eld.tree
   (:require [clojure.zip :as zip]
             [eld.node :as node]
-            [eld.implementation.node.array :as array]))
+            [eld.implementation.array :as array]))
 
 (set! *warn-on-reflection* true)
 
+(defprotocol Tree
+  (to-zipper [this])
+  (score-tree [this features])
+  (get-node [this node-id]))
+
+(defprotocol DebuggableTree
+  (score-tree-with-path [this features]))
+
 (defn tree [node-maps]
-  (let [nodes (mapv array/create-node-from-map node-maps)]
-    {:nodes (to-array nodes)
-     :size (count nodes)
-     :root 0}))
+  (let [tree (array/create-tree node-maps)]
+    {:nodes tree
+     :root  0}))
 
 (defn to-zipper [{:keys [^objects nodes root]}]
   (zip/zipper node/branch?

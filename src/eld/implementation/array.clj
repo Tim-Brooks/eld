@@ -1,4 +1,4 @@
-(ns eld.implementation.node.array
+(ns eld.implementation.array
   (:require [eld.node :as node]))
 
 (set! *warn-on-reflection* true)
@@ -25,3 +25,7 @@
 
 (defn create-node-from-map [{:keys [condition feature branch? children value]}]
   (create-node condition feature branch? children value))
+
+(defn create-tree [node-maps]
+  (let [nodes (mapv create-node-from-map node-maps)]
+    (to-array nodes)))
