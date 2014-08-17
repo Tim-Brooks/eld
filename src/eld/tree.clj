@@ -1,43 +1,25 @@
 (ns eld.tree
-  (:require [clojure.zip :as zip]
-            [eld.node :as node]
-            [eld.implementation.array :as array]))
+  (:require [eld.node :as node]))
 
 (set! *warn-on-reflection* true)
 
 (defprotocol Tree
   (to-zipper [this])
-  (score-tree [this features])
   (get-node [this node-id]))
 
-(defprotocol DebuggableTree
-  (score-tree-with-path [this features]))
-
-(defn tree [node-maps]
-  (let [tree (array/create-tree node-maps)]
-    {:nodes tree
-     :root  0}))
-
-(defn to-zipper [{:keys [^objects nodes root]}]
-  (zip/zipper node/branch?
-              (fn [node] (map #(aget nodes %) (node/children node)))
-              (fn [node children]
-                (array/create-node (node/condition node) true children nil))
-              (aget nodes root)))
-
 (defn score-tree-with-path [{:keys [nodes root]} features]
-  (loop [node-index root
+  (loop [node-id root
          path (transient [])]
-    (let [modified-path (conj! path node-index)
-          node (nth nodes node-index)]
+    (let [modified-path (conj! path node-id)
+          node (get-node nodes node-id)]
       (if (node/leaf? node)
         {:value (node/value node) :path (persistent! path)}
         (recur (nth (node/children node) ((node/condition node) features))
                modified-path)))))
 
 (defn score-tree [{:keys [nodes root]} features]
-  (loop [node (nth nodes root)]
+  (loop [node (get-node nodes root)]
     (if (node/leaf? node)
       (node/value node)
-      (recur (nth nodes (nth (node/children node)
-                             ((node/condition node) features)))))))
+      (recur (get-node nodes (nth (node/children node)
+                                  ((node/condition node) features)))))))
