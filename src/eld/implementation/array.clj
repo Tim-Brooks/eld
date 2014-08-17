@@ -37,7 +37,7 @@
     (zip/zipper node/branch?
                 (fn [node] (map #(aget ^objects this %) (node/children node)))
                 (fn [node children]
-                  (node/set-children! node children))
+                  (node/set-children! node children))       ;; Does mutability make sense with zippers?
                 (aget ^objects this 0)))
   (get-node [this node-id] (aget ^objects this node-id)))
 
