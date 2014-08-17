@@ -1,19 +1,23 @@
 (ns eld.implementation.reduce
-  (:require [eld.node :as node]))
+  (:require [eld.node :as node]
+            [eld.tree :as tree]))
 
 (set! *warn-on-reflection* true)
 
-(defn loop [node features new-tree nodes-to-search]
+(defn loop [node features new-tree-features new-tree nodes-to-search]
   (cond (node/leaf? node)
         (if (empty? nodes-to-search)
           new-tree
           nil)                                              ;; Add Node
 
-        (contains? features (node/feature node))
+        (contains? new-tree-features (node/feature node))
         nil                                                 ;; Add search direction
 
         :else
-        nil                                                 ;; Get next node and recur
-        ))
+        (recur (tree/get-node (node/next-node-id node features))
+               features
+               new-tree-features
+               new-tree
+               nodes-to-search)))
 
-(defn reduce-tree [tree features])
+(defn reduce-tree [tree features new-tree-features])
