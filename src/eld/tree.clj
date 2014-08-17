@@ -14,12 +14,11 @@
           node (get-node nodes node-id)]
       (if (node/leaf? node)
         {:value (node/value node) :path (persistent! path)}
-        (recur (nth (node/children node) ((node/condition node) features))
+        (recur (node/next-node-id node features)
                modified-path)))))
 
 (defn score-tree [{:keys [nodes root]} features]
   (loop [node (get-node nodes root)]
     (if (node/leaf? node)
       (node/value node)
-      (recur (get-node nodes (nth (node/children node)
-                                  ((node/condition node) features)))))))
+      (recur (get-node nodes (node/next-node-id node features))))))

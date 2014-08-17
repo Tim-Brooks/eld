@@ -10,4 +10,5 @@
 (defprotocol BranchNode
   (children [this])
   (condition [this])
-  (feature [this]))
+  (feature [this])
+  (next-node-id [this features]))

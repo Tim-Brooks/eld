@@ -16,11 +16,13 @@
   (Class/forName "clojure.lang.PersistentVector")
   (children [this] (nth this 3))
   (condition [this] (nth this 2))
-  (condition [this] (nth this 1)))
+  (feature [this] (nth this 1))
+  (next-node-id [this features] (nth (node/children this)
+                                     ((node/condition this) features))))
 
 (defn create-node [condition feature branch? children value]
   (if branch?
-    [true feature condition (to-array children)]
+    [true feature condition children]
     [false value]))
 
 (defn create-node-from-map [{:keys [condition feature branch? children value]}]

@@ -18,7 +18,9 @@
   (Class/forName "[Ljava.lang.Object;")
   (children [this] (aget ^objects this 3))
   (condition [this] (aget ^objects this 2))
-  (feature [this] (aget ^objects this 1)))
+  (feature [this] (aget ^objects this 1))
+  (next-node-id [this features] (aget ^objects (node/children this)
+                                      ((node/condition this) features))))
 
 (defn create-node [condition feature branch? children value]
   (if branch?
