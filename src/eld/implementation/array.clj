@@ -19,8 +19,9 @@
   (children [this] (aget ^objects this 3))
   (condition [this] (aget ^objects this 2))
   (feature [this] (aget ^objects this 1))
-  (next-node-id [this features] (aget ^objects (node/children this)
-                                      ((node/condition this) features))))
+  (next-node-id [this features] (aget ^objects (aget ^objects this 3)
+                                      ((aget ^objects this 2) features)))
+  (set-children! [this children] (aset ^objects this 3)))
 
 (defn create-node [condition feature branch? children value]
   (if branch?
@@ -36,7 +37,7 @@
     (zip/zipper node/branch?
                 (fn [node] (map #(aget ^objects this %) (node/children node)))
                 (fn [node children]
-                  (create-node (node/condition node) true children nil))
+                  (node/set-children! node children))
                 (aget ^objects this 0)))
   (get-node [this node-id] (aget ^objects this node-id)))
 

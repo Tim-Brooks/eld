@@ -11,4 +11,5 @@
   (children [this])
   (condition [this])
   (feature [this])
-  (next-node-id [this features]))
+  (next-node-id [this features])
+  (set-children! [this node-id]))
