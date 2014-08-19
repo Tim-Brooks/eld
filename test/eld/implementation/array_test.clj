@@ -28,7 +28,9 @@
 
 (deftest tree-construction
   (let [tree (eld/array-tree tree-nodes)]
-    (compare/map-tree-compare? tree-nodes tree)))
+    (doseq [[expected actual] (map vector tree-nodes (:nodes tree))]
+      (testing (str "Comparing node " (:id expected) " with actual.")
+        (is (compare/map-node-compare expected actual))))))
 
 (deftest score-tree
   (let [tree (eld/array-tree tree-nodes)]
