@@ -15,7 +15,9 @@
   (is (= (:condition expected) (node/condition actual)))
   (is (= (:children expected) (vec (node/children actual)))))
 
-(defn map-tree-compare? [map-tree tree]
+(defn map-node-compare [node-map node])
+
+(defn map-tree-compare [map-tree tree]
   (doseq [[expected actual] (map vector map-tree (:nodes tree))]
     (testing (str "Comparing node " (:id expected) " with actual.")
       (if (:branch? expected)
