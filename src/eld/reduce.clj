@@ -1,4 +1,4 @@
-(ns eld.implementation.reduce
+(ns eld.reduce
   (:require [eld.node :as node]
             [eld.tree :as tree]))
 
@@ -30,9 +30,6 @@
             nil                                             ;; Add search direction
 
             :else
-            (recur (tree/get-node (node/next-node-id node features))
-                   features
-                   new-tree-features
-                   new-tree
-                   nodes-to-search))
-      (recur node nodes-to-search parent-stack))))
+            (recur (tree/get-node tree (node/next-node-id node features))
+                   nodes-to-search
+                   parent-stack)))))

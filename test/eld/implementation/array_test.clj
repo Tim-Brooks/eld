@@ -2,6 +2,7 @@
   (:use [clojure.test])
   (:require [eld.core :as eld]
             [eld.node :as node]
+            [eld.util.compare :as compare]
             [eld.tree :as tree]))
 
 (def ^:private tree-nodes
@@ -25,25 +26,9 @@
     :branch? false
     :id      "5"}])
 
-(defn- leaf-tests [expected actual]
-  (is (= false (node/branch? actual)))
-  (is (= true (node/leaf? actual)))
-  (is (= (:value expected) (node/value actual))))
-
-(defn- branch-tests [expected actual]
-  (is (= true (node/branch? actual)))
-  (is (= false (node/leaf? actual)))
-  (is (= (:feature expected) (node/feature actual)))
-  (is (= (:condition expected) (node/condition actual)))
-  (is (= (:children expected) (vec (node/children actual)))))
-
 (deftest tree-construction
   (let [tree (eld/array-tree tree-nodes)]
-    (doseq [[expected actual] (map vector tree-nodes (:nodes tree))]
-      (testing (str "Comparing node " (:id expected) " with actual.")
-        (if (:branch? expected)
-          (branch-tests expected actual)
-          (leaf-tests expected actual))))))
+    (compare/map-tree-compare? tree-nodes tree)))
 
 (deftest score-tree
   (let [tree (eld/array-tree tree-nodes)]
