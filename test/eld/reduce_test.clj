@@ -2,7 +2,7 @@
   (:use [clojure.test])
   (:require [eld.core :as core]
             [eld.reduce :as reduce]
-            [eld.util.compare :as compare]))
+            [eld.util.equality :as compare]))
 
 (def ^:private tree-nodes
   [{:condition (fn [feature-map] (if (> 1.0 (get feature-map "feature" 0)) 0 1))

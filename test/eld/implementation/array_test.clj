@@ -2,7 +2,7 @@
   (:use [clojure.test])
   (:require [eld.core :as eld]
             [eld.node :as node]
-            [eld.util.compare :as compare]
+            [eld.util.equality :as compare]
             [eld.tree :as tree]))
 
 (def ^:private tree-nodes
@@ -30,7 +30,7 @@
   (let [tree (eld/array-tree tree-nodes)]
     (doseq [[expected actual] (map vector tree-nodes (:nodes tree))]
       (testing (str "Comparing node " (:id expected) " with actual.")
-        (is (compare/map-node-compare expected actual))))))
+        (is (compare/map-node-equal? expected actual))))))
 
 (deftest score-tree
   (let [tree (eld/array-tree tree-nodes)]
