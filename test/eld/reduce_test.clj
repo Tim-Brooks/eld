@@ -25,11 +25,11 @@
     :branch? false
     :id      "5"}])
 
-(comment
-  (deftest test-reduce
-    (let [tree (core/array-tree tree)
-          reduced-tree (reduce/reduce-tree tree {} {})]
-      (testing "Single node returned if no features for new tree"
-        (doseq [[expected actual] (map vector tree-nodes (:nodes reduced-tree))]
-          (testing (str "Comparing node " (:id expected) " with actual.")
-            (is (compare/map-node-equal? expected actual))))))))
+(deftest test-reduce
+  (testing "Single node returned if no features for new tree"
+    (let [tree (core/array-tree tree-nodes)
+          reduced-tree (reduce/reduce-tree tree {"feature" 2 "feature2" 0} {})
+          expected (nth tree-nodes 4)
+          actual (first reduced-tree)]
+      (testing (str "Comparing node " expected " with actual.")
+        (is (compare/map-node-equal? expected actual))))))

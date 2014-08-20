@@ -16,9 +16,9 @@
 ;; Hardcoded root right now
 ;; Slow stacks
 ;; new tree is vector
-(defn reduce-tree [tree features new-tree-features]
+(defn reduce-tree [{:keys [nodes]} features new-tree-features]
   (let [new-tree []]
-    (loop [node (tree/get-node tree 0)
+    (loop [node (tree/get-node nodes 0)
            nodes-to-search []
            parent-stack []]
       (cond (node/leaf? node)
@@ -30,6 +30,6 @@
             nil                                             ;; Add search direction
 
             :else
-            (recur (tree/get-node tree (node/next-node-id node features))
+            (recur (tree/get-node nodes (node/next-node-id node features))
                    nodes-to-search
                    parent-stack)))))
