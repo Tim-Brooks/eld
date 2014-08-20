@@ -1,5 +1,7 @@
 (ns eld.implementation.vector
-  (:require [eld.node :as node]))
+  (:require [clojure.zip :as zip]
+            [eld.node :as node]
+            [eld.tree :as tree]))
 
 (set! *warn-on-reflection* true)
 
@@ -28,3 +30,18 @@
 
 (defn create-node-from-map [{:keys [condition feature branch? children value]}]
   (create-node condition feature branch? children value))
+
+
+(extend-protocol tree/Tree
+  (Class/forName "clojure.lang.PersistentVector")
+  (to-zipper [this]
+    (zip/zipper node/branch?
+                (fn [node] (map #(aget ^objects this %) (node/children node)))
+                (fn [node children]
+                  (node/set-children! node children))       ;; Does mutability make sense with zippers?
+                (nth ^objects this 0)))
+  (get-node [this node-id] (nth this node-id)))
+
+(defn create-tree [node-maps]
+  (let [nodes (mapv create-node-from-map node-maps)]
+    (to-array nodes)))
