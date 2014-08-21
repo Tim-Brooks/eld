@@ -32,4 +32,11 @@
           expected (nth tree-nodes 4)
           actual (first reduced-tree)]
       (testing (str "Comparing node " expected " with actual.")
-        (is (compare/map-node-equal? expected actual))))))
+        (is (compare/map-node-equal? expected actual)))))
+  (testing "Original tree returned if new tree features are same as old tree."
+    (let [tree (core/array-tree tree-nodes)
+          reduced-tree (reduce/reduce-tree
+                         tree {"feature" 2 "feature2" 0} {"feature" "feature2"})]
+      (doseq [[expected actual] (map vector tree-nodes (:nodes reduced-tree))]
+        (testing (str "Comparing node " (:id expected) " with actual.")
+          (is (compare/map-node-equal? expected actual)))))))

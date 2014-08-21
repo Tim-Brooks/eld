@@ -10,8 +10,8 @@
     (let [^objects parent-pair (peek parent-stack)
           new-children (aget parent-pair 1)]
       (if (== (aget parent-pair 0) (count new-children))
-        (aset ))
-      )))
+        nil
+        nil))))
 
 ;; Hardcoded root right now
 ;; Slow stacks
