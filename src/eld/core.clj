@@ -13,3 +13,6 @@
   (let [tree (vector/create-tree node-maps)]
     {:nodes tree
      :root  0}))
+
+(defn forest [tree-vec]
+  "Turns a vector of trees into a forest")
