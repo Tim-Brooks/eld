@@ -21,7 +21,7 @@
   (feature [this] (aget ^objects this 1))
   (next-node-id [this features] (aget ^objects (aget ^objects this 3)
                                       ((aget ^objects this 2) features)))
-  (set-children! [this children] (aset ^objects this 3)))
+  (set-children [this children] (aset ^objects this 3)))
 
 (defn create-node [condition feature branch? children value]
   (if branch?
@@ -37,7 +37,7 @@
     (zip/zipper node/branch?
                 (fn [node] (map #(aget ^objects this %) (node/children node)))
                 (fn [node children]
-                  (node/set-children! node children))       ;; Does mutability make sense with zippers?
+                  (node/set-children node children))       ;; Does mutability make sense with zippers?
                 (aget ^objects this 0)))
   (get-node [this node-id] (aget ^objects this node-id)))
 

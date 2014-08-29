@@ -12,7 +12,7 @@
         ^int idx (aget parent-pair 0)]
     (aset new-children idx (count new-tree))
     (if (== child-idx (alength new-children))
-      (do (node/set-children! (nth new-tree idx) new-children)
+      (do (node/set-children (nth new-tree idx) new-children)
           (conj! new-tree node))
       (conj! new-tree node))))
 
