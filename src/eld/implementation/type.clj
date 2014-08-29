@@ -19,7 +19,7 @@
   (next-node-id [this features]
     (aget children (condition features)))
   (set-children [this new-children]
-    (PersistentNode. leaf? feature value new-children condition))
+    (PersistentNode. leaf? feature value (int-array new-children) condition))
   Object
   (toString [_]
     (str "PersistentNode{leaf?=" leaf?
@@ -40,8 +40,8 @@
 
 (defn create-node [condition feature branch? children value]
   (if branch?
-    (PersistentNode. false feature value children condition)
-    (PersistentNode. true feature value children condition)))
+    (PersistentNode. false feature value (int-array children) condition)
+    (PersistentNode. true feature value (int-array 0) condition)))
 
 (defn create-node-from-map [{:keys [condition feature branch? children value]}]
   (create-node condition feature branch? children value))
