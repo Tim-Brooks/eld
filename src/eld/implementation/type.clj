@@ -17,7 +17,8 @@
   (feature [this] feature)
   (next-node-id [this features]
     (aget children (condition features)))
-  (set-children [this node-id]))
+  (set-children [this new-children]
+    (PersistentNode. leaf? feature value new-children condition)))
 
 (deftype PersistentTree [^int root ^objects nodes]
   tree/Tree
