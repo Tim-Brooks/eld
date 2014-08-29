@@ -12,4 +12,4 @@
   (condition [this])
   (feature [this])
   (next-node-id [this features])
-  (set-children [this children]))
+  (set-children [this new-children]))

@@ -21,7 +21,7 @@
   (feature [this] (nth this 1))
   (next-node-id [this features] (nth (node/children this)
                                      ((node/condition this) features)))
-  (set-children [this children] (assoc this 3 children)))
+  (set-children [this new-children] (assoc this 3 new-children)))
 
 (defn create-node [condition feature branch? children value]
   (if branch?

@@ -21,7 +21,7 @@
   (feature [this] (aget ^objects this 1))
   (next-node-id [this features] (aget ^objects (aget ^objects this 3)
                                       ((aget ^objects this 2) features)))
-  (set-children [this children] (aset ^objects this 3)))
+  (set-children [this new-children] (aset ^objects this 3 new-children)))
 
 (defn create-node [condition feature branch? children value]
   (if branch?
