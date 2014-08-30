@@ -6,6 +6,7 @@
 
 (set! *warn-on-reflection* true)
 
+;; Need to decide on rules for when a node is a leaf and when it is not.
 (deftype PersistentNode [leaf? feature value ^ints children condition]
   node/Node
   (branch? [this] (not leaf?))
@@ -19,7 +20,7 @@
   (next-node-id [this features]
     (aget children (condition features)))
   (set-children [this new-children]
-    (PersistentNode. leaf? feature value (int-array new-children) condition))
+    (PersistentNode. false feature value (int-array new-children) condition))
   Object
   (toString [_]
     (str "PersistentNode{leaf?=" leaf?
