@@ -23,12 +23,12 @@
     (recur (inc i) rest)))
 
 ;; new tree is vector
-(defn reduce-tree [{:keys [nodes root]} features new-tree-features]
-  (loop [node-id root
+(defn reduce-tree [tree features new-tree-features]
+  (loop [node-id (tree/root tree)
          new-tree (transient [])
          nodes-to-search (Stack.)
          parent-stack (Stack.)]
-    (let [node (tree/get-node nodes node-id)]
+    (let [node (tree/get-node tree node-id)]
       (cond (node/leaf? node)
             (if (empty? nodes-to-search)
               (persistent! (conj! new-tree node))

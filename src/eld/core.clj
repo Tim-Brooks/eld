@@ -15,4 +15,5 @@
   (type/create-tree node-maps))
 
 (defn forest [tree-vec]
-  "Turns a vector of trees into a forest")
+  "Turns a vector of trees into a forest"
+  )
