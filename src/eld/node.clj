@@ -8,6 +8,7 @@
   (value [this]))
 
 (defprotocol BranchNode
+  (id [this])
   (children [this])
   (condition [this])
   (feature [this])
