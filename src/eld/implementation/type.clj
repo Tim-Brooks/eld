@@ -36,7 +36,10 @@
                 (fn [node children]
                   (node/set-children node children))
                 (aget nodes 0)))
-  (get-node [_ node-id] (aget nodes node-id)))
+  (get-node [_ node-id] (aget nodes node-id))
+  Object
+  (toString [_]
+    (str "PersistentTree{root=" root ", nodes=" (Arrays/toString nodes))))
 
 (defn create-node [condition feature branch? children value]
   (if branch?
