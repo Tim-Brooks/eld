@@ -19,7 +19,7 @@
 (defn- add-to-search [parent-idx ^objects children ^Stack nodes-to-search ^Stack parent-stack]
   (loop [i 0 [child & rest] children]
     (.push nodes-to-search child)
-    (.push parent-stack (object-array [parent-idx i (object-array (alength children))]))
+    (.push parent-stack (object-array [parent-idx i (object-array (alength children))])) ;; Initialize one at the top. And just use references to mutable array.
     (recur (inc i) rest)))
 
 ;; new tree is vector
@@ -31,7 +31,7 @@
     (let [node (tree/get-node tree node-id)]
       (cond (node/leaf? node)
             (if (empty? nodes-to-search)
-              (persistent! (conj! new-tree node))
+              (persistent! (conj! new-tree node))           ;; Link to parent
               (let [next (.pop nodes-to-search)]
                 (recur next                                 ;; Assumes real node
                        (add-node node new-tree parent-stack)
