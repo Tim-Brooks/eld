@@ -40,7 +40,8 @@
                 (fn [node children]
                   (node/set-children node children))       ;; Does mutability make sense with zippers?
                 (nth ^objects this 0)))
-  (get-node [this node-id] (nth this node-id)))
+  (get-node [this node-id] (nth this node-id))
+  (root [this] 0))
 
 (defn create-tree [node-maps]
   (let [nodes (mapv create-node-from-map node-maps)]

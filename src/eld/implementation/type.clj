@@ -39,9 +39,9 @@
                 (fn [node children]
                   (node/set-children node
                                      (map (fn [node]
-                                            (if (instance? PersistentNode node)
-                                              (node/id node)
-                                              node))
+                                            (if (integer? node)
+                                              node
+                                              (node/id node)))
                                           children)))
                 (aget nodes 0)))
   (get-node [_ node-id] (aget nodes node-id))

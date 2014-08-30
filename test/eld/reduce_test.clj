@@ -9,21 +9,21 @@
     :feature   "feature"
     :branch?   true
     :children  [1 2]
-    :id        "1"}
+    :id        0}
    {:value   2
     :branch? false
-    :id      "2"}
+    :id      1}
    {:condition (fn [feature-map] (if (< 1.0 (get feature-map "feature2" 2)) 0 1))
     :feature   "feature2"
     :branch?   true
     :children  [3 4]
-    :id        "3"}
+    :id        2}
    {:value   4
     :branch? false
-    :id      "4"}
+    :id      3}
    {:value   5
     :branch? false
-    :id      "5"}])
+    :id      4}])
 
 (deftest test-reduce
   (testing "Single node returned if no features for new tree"
