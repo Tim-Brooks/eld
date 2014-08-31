@@ -39,7 +39,16 @@
                        parent-stack)))
 
             (contains? new-tree-features (node/feature node))
-            nil
+            (do
+              (add-to-search node-id
+                             (node/children node)
+                             nodes-to-search
+                             parent-stack)
+              (recur (.pop nodes-to-search)
+                     new-tree
+                     nodes-to-search
+                     parent-stack))
+
 
             :else
             (recur (node/next-node-id node features)
