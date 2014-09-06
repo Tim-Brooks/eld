@@ -10,7 +10,7 @@
     (conj! new-tree node)
     (let [^objects parent-data (.pop parent-stack)
           ^ints new-children-array (aget parent-data 2)
-          child-idx (aget new-children-array 1)
+          child-idx (aget parent-data 1)
           parent-idx (aget parent-data 0)]
       (aset new-children-array child-idx (count new-tree))
       (when (== child-idx (alength new-children-array))
@@ -18,12 +18,13 @@
       (conj! new-tree node))))
 
 (defn- add-to-search [new-parent-idx ^ints children ^Stack nodes-to-search ^Stack parent-stack]
-  (let [new-children (int-array (alength children))]
-    (loop [i 0 [child & rest] children]
-      (when (not (nil? child))
-        (.push nodes-to-search child)
+  (let [num-of-children (alength children)
+        new-children (int-array num-of-children)]
+    (loop [i (dec num-of-children)]
+      (when (not (== -1 i))
+        (.push nodes-to-search (aget children i))
         (.push parent-stack (object-array [new-parent-idx i new-children]))
-        (recur (inc i) rest)))))
+        (recur (dec i))))))
 
 (defn reduce-tree [tree features new-tree-features]
   (loop [node-id (tree/root tree)
@@ -33,7 +34,8 @@
     (let [node (tree/get-node tree node-id)]
       (cond (node/leaf? node)
             (if (empty? nodes-to-search)
-              (persistent! (add-node node new-tree parent-stack))
+              (tree/new-tree tree
+                             (persistent! (add-node node new-tree parent-stack)))
               (let [next (.pop nodes-to-search)]
                 (recur next
                        (add-node node new-tree parent-stack)

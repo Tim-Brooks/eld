@@ -2,7 +2,8 @@
   (:use [clojure.test])
   (:require [eld.core :as core]
             [eld.reduce :as reduce]
-            [eld.util.equality :as compare]))
+            [eld.util.equality :as compare]
+            [eld.tree :as tree]))
 
 (def ^:private tree-nodes
   [{:condition (fn [feature-map] (if (> 1.0 (get feature-map "feature" 0)) 0 1))
@@ -27,17 +28,17 @@
 
 (deftest test-reduce
   (testing "Single node returned if no features for new tree"
-    (let [tree (core/array-tree tree-nodes)
+    (let [tree (core/eld-tree tree-nodes)
           reduced-tree (reduce/reduce-tree tree {"feature" 2 "feature2" 0} {})
           expected (nth tree-nodes 4)
-          actual (first reduced-tree)]
+          actual (first (tree/nodes reduced-tree))]
       (testing (str "Comparing node " expected " with actual.")
         (is (compare/map-node-equal? expected actual)))))
   (testing "Original tree returned if new tree features are same as old tree."
-    (let [tree (core/array-tree tree-nodes)
+    (let [tree (core/eld-tree tree-nodes)
           reduced-tree (reduce/reduce-tree
-                         tree {"feature" 2 "feature2" 0} {"feature" "feature2"})]
-      (is (= (count tree) (count (:nodes reduced-tree))))
-      (doseq [[expected actual] (map vector tree-nodes (:nodes reduced-tree))]
+                         tree {"feature" 2 "feature2" 0} #{"feature" "feature2"})]
+      (is (= (count (tree/nodes tree)) (count (tree/nodes reduced-tree))))
+      (doseq [[expected actual] (map vector tree-nodes (tree/nodes reduced-tree))]
         (testing (str "Comparing node " (:id expected) " with actual.")
           (is (compare/map-node-equal? expected actual)))))))

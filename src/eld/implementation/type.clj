@@ -33,6 +33,7 @@
 
 (deftype PersistentTree [^int root ^objects nodes]
   tree/Tree
+  (nodes [_] nodes)
   (to-zipper [_]
     (zip/zipper node/branch?
                 (fn [node] (map #(aget nodes %) (node/children node)))
@@ -46,6 +47,7 @@
                 (aget nodes 0)))
   (get-node [_ node-id] (aget nodes node-id))
   (root [_] root)
+  (new-tree [_ nodes] (PersistentTree. 0 (to-array nodes)))
   Object
   (toString [_]
     (str "PersistentTree{root=" root ", nodes=" (Arrays/toString nodes))))

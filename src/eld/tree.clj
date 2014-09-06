@@ -6,7 +6,9 @@
 (defprotocol Tree
   (to-zipper [this])
   (get-node [this node-id])
-  (root [this]))
+  (nodes [this])
+  (root [this])
+  (new-tree [this new-nodes]))
 
 (defn score-tree-with-path [tree features]
   (loop [node-id (root tree)
