@@ -6,4 +6,4 @@
   :test-selectors {:default (fn [m] (not (:benchmark m)))
                    :benchmark :benchmark}
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [criterium "0.4.2"]])
+                 [criterium "0.4.3"]])
