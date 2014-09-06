@@ -25,7 +25,6 @@
         (.push parent-stack (object-array [new-parent-idx i new-children]))
         (recur (inc i) rest)))))
 
-;; new tree is vector
 (defn reduce-tree [tree features new-tree-features]
   (loop [node-id (tree/root tree)
          new-tree (transient [])
@@ -34,7 +33,7 @@
     (let [node (tree/get-node tree node-id)]
       (cond (node/leaf? node)
             (if (empty? nodes-to-search)
-              (persistent! (add-node node new-tree parent-stack)) ;; Link to parent
+              (persistent! (add-node node new-tree parent-stack))
               (let [next (.pop nodes-to-search)]
                 (recur next
                        (add-node node new-tree parent-stack)
