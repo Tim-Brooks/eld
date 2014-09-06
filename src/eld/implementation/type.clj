@@ -45,6 +45,7 @@
                                           children)))
                 (aget nodes 0)))
   (get-node [_ node-id] (aget nodes node-id))
+  (root [_] root)
   Object
   (toString [_]
     (str "PersistentTree{root=" root ", nodes=" (Arrays/toString nodes))))
