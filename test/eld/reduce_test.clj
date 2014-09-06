@@ -41,4 +41,12 @@
       (is (= (count (tree/nodes tree)) (count (tree/nodes reduced-tree))))
       (doseq [[expected actual] (map vector tree-nodes (tree/nodes reduced-tree))]
         (testing (str "Comparing node " (:id expected) " with actual.")
+          (is (compare/map-node-equal? expected actual))))))
+  (testing "Reduced tree returned without unneeded features."
+    (let [tree (core/eld-tree tree-nodes)
+          reduced-tree (reduce/reduce-tree
+                         tree {"feature" 2 "feature2" 0} #{"feature2"})]
+      (is (= 3 (count (tree/nodes reduced-tree))))
+      (doseq [[expected actual] (map vector (drop 2 tree-nodes) (tree/nodes reduced-tree))]
+        (testing (str "Comparing node " (:id expected) " with actual.")
           (is (compare/map-node-equal? expected actual)))))))
