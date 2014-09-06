@@ -52,6 +52,7 @@
                                  "feature3" 2
                                  "feature4" 2}))))))
 
+;; TODO This demonstrates a bug in reduce
 (deftest ^:benchmark reduce-benchmark
   (testing "Reduce persistent tree"
     (let [tree (eld/eld-tree tree-nodes)]
