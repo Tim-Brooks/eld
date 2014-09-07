@@ -1,7 +1,8 @@
 (ns eld.reduce
   (:require [eld.node :as node]
             [eld.tree :as tree])
-  (:import (java.util Stack)))
+  (:import (java.util Stack)
+           (gnu.trove.stack.array TIntArrayStack)))
 
 (set! *warn-on-reflection* true)
 
@@ -19,7 +20,8 @@
           (node/set-children (nth new-tree parent-idx) new-children-array)))
       (conj! new-tree node))))
 
-(defn- add-to-search [new-parent-idx ^ints children ^Stack nodes-to-search ^Stack parent-stack]
+(defn- add-to-search
+  [new-parent-idx ^ints children ^TIntArrayStack nodes-to-search ^Stack parent-stack]
   (let [num-of-children (alength children)
         new-children (int-array num-of-children)]
     (loop [i (dec num-of-children)]
@@ -31,11 +33,11 @@
 (defn reduce-tree [tree features new-tree-features]
   (loop [node-id (tree/root tree)
          new-tree (transient [])
-         nodes-to-search (Stack.)
+         nodes-to-search (TIntArrayStack.)
          parent-stack (Stack.)]
     (let [node (tree/get-node tree node-id)]
       (cond (node/leaf? node)
-            (if (empty? nodes-to-search)
+            (if (== 0 (.size nodes-to-search))
               (tree/new-tree tree
                              (persistent! (add-node node new-tree parent-stack)))
               (let [next (.pop nodes-to-search)]
