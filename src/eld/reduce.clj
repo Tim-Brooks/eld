@@ -13,7 +13,8 @@
           child-idx (aget parent-data 1)
           parent-idx (aget parent-data 0)]
       (aset new-children-array child-idx (count new-tree))
-      (when (== child-idx (alength new-children-array))
+      (when (== child-idx (dec (alength new-children-array)))
+        ;; Not mutated
         (node/set-children (nth new-tree parent-idx) new-children-array))
       (conj! new-tree node))))
 
@@ -49,7 +50,7 @@
                              nodes-to-search
                              parent-stack)
               (recur (.pop nodes-to-search)
-                     (conj! new-tree node)
+                     (add-node node new-tree parent-stack)
                      nodes-to-search
                      parent-stack))
 
