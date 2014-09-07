@@ -14,8 +14,9 @@
           parent-idx (aget parent-data 0)]
       (aset new-children-array child-idx (count new-tree))
       (when (== child-idx (dec (alength new-children-array)))
-        ;; Not mutated
-        (node/set-children (nth new-tree parent-idx) new-children-array))
+        (assoc! new-tree
+          parent-idx
+          (node/set-children (nth new-tree parent-idx) new-children-array)))
       (conj! new-tree node))))
 
 (defn- add-to-search [new-parent-idx ^ints children ^Stack nodes-to-search ^Stack parent-stack]
