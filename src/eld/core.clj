@@ -12,6 +12,7 @@
   (vector/create-tree node-maps))
 
 (defn eld-tree [node-maps]
+  "Returns an eld tree."
   (type/create-tree node-maps))
 
 (defn forest [tree-vec]
